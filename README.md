@@ -51,32 +51,6 @@ Generates a clean, recruiter-friendly resume in PDF format.
 
 ---
 
-# 🖼️ Screenshots
-
-## Landing Page
-
-> _(Add screenshot here)_
-
----
-
-## Home
-
-> _(Add screenshot here)_
-
----
-
-## Interview Report
-
-> _(Add screenshot here)_
-
----
-
-## Resume Generator
-
-> _(Add screenshot here)_
-
----
-
 # 🛠️ Tech Stack
 
 ## Frontend
