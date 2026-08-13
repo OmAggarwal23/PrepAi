@@ -1,0 +1,154 @@
+.resume-loading {
+  width: 100vw;
+  height: 100vh;
+
+  background: #000;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+
+  position: relative;
+}
+.resume-loading::before {
+  content: "";
+
+  position: absolute;
+
+  width: 700px;
+  height: 700px;
+
+  background: radial-gradient(circle, #2563eb33, transparent 70%);
+
+  filter: blur(100px);
+
+  animation: glow 8s infinite alternate;
+}
+.sparkle {
+  color: #60a5fa;
+
+  margin-bottom: 2rem;
+
+  z-index: 2;
+}
+.resume-loading h1 {
+  color: white;
+
+  font-size: 3rem;
+
+  font-weight: 700;
+
+  margin-bottom: 0.6rem;
+
+  z-index: 2;
+}
+.resume-loading p {
+  color: #9ca3af;
+
+  margin-bottom: 3rem;
+
+  z-index: 2;
+}
+.progress-wrapper {
+  width: min(600px, 90%);
+
+  z-index: 2;
+}
+.progress-track {
+  height: 14px;
+
+  border-radius: 999px;
+
+  background: #202020;
+
+  overflow: hidden;
+
+  position: relative;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+
+  background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6, #06b6d4);
+
+  background-size: 300%;
+
+  animation: gradientMove 2s linear infinite;
+
+  transition: width 0.25s ease-out;
+}
+.shine {
+  position: absolute;
+
+  left: -20%;
+
+  top: 0;
+
+  width: 20%;
+
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.7),
+    transparent
+  );
+
+  animation: shine 1.8s linear infinite;
+}
+.percentage {
+  margin-top: 1.5rem;
+
+  font-size: 1.3rem;
+
+  color: white;
+
+  font-weight: 600;
+
+  z-index: 2;
+}
+.tasks {
+  margin-top: 3rem;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.9rem;
+
+  color: #bdbdbd;
+
+  font-size: 1rem;
+
+  z-index: 2;
+}
+@keyframes gradientMove {
+  0% {
+    background-position: 0%;
+  }
+
+  100% {
+    background-position: 300%;
+  }
+}
+
+@keyframes shine {
+  100% {
+    left: 120%;
+  }
+}
+
+@keyframes glow {
+  from {
+    transform: translate(-120px, -80px);
+  }
+
+  to {
+    transform: translate(120px, 80px);
+  }
+}
