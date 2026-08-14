@@ -8,7 +8,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://prep-ai-chi-hazel.vercel.app"],
     credentials: true,
   }),
 );
