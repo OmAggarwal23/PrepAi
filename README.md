@@ -173,9 +173,9 @@ PrepAI
 
 **Om Aggarwal**
 
-GitHub: https://github.com/YOUR_USERNAME
+GitHub: https://github.com/OmAggarwal23
 
-LinkedIn: https://linkedin.com/in/YOUR_LINKEDIN
+LinkedIn: https://linkedin.com/in/omaggarwal236/
 
 ---
 
