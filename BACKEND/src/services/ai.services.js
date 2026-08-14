@@ -1,7 +1,8 @@
 const { GoogleGenAI } = require("@google/genai");
 const { z } = require("zod");
 const { zodToJsonSchema } = require("zod-to-json-schema");
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
+const chromium = require("@sparticuz/chromium");
 
 const ai = new GoogleGenAI({
   apiKey: process.env.GOOGLE_GENAI_API_KEY,
@@ -140,23 +141,54 @@ Do not leave any array empty.`;
   return JSON.parse(response.text);
 }
 
+// async function geneatePdffromHTML(htmlContent) {
+//   const browser = await puppeteer.launch();
+//   const page = await browser.newPage();
+//   await page.setContent(htmlContent, { waitUntil: "networkidle0" });
+
+//   const pdfBuffer = await page.pdf({
+//     format: "A4",
+//     margin: {
+//       top: "20mm",
+//       bottom: "20mm",
+//       left: "15mm",
+//       right: "15mm",
+//     },
+//   });
+//   await browser.close();
+
+//   return pdfBuffer;
+// }
 async function geneatePdffromHTML(htmlContent) {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.setContent(htmlContent, { waitUntil: "networkidle0" });
-
-  const pdfBuffer = await page.pdf({
-    format: "A4",
-    margin: {
-      top: "20mm",
-      bottom: "20mm",
-      left: "15mm",
-      right: "15mm",
-    },
+  const browser = await puppeteer.launch({
+    executablePath: await chromium.executablePath(),
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    headless: chromium.headless,
   });
-  await browser.close();
 
-  return pdfBuffer;
+  try {
+    const page = await browser.newPage();
+
+    await page.setContent(htmlContent, {
+      waitUntil: "networkidle0",
+    });
+
+    const pdfBuffer = await page.pdf({
+      format: "A4",
+      printBackground: true,
+      margin: {
+        top: "20mm",
+        bottom: "20mm",
+        left: "15mm",
+        right: "15mm",
+      },
+    });
+
+    return pdfBuffer;
+  } finally {
+    await browser.close();
+  }
 }
 
 async function getResumePdf({ resume, selfDescription, jobDescription }) {
