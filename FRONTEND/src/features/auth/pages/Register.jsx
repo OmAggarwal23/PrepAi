@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router";
 import { useAuth } from "../hooks/useAuth";
+import "../auth.form.scss";
+import PageLoader from "./PageLoader";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -17,14 +19,10 @@ const Register = () => {
   };
 
   if (loading) {
-    return (
-      <main>
-        <h1>Loading</h1>
-      </main>
-    );
+    return <PageLoader message="Creating your account..." />;
   }
   return (
-    <main>
+    <main className="auth-page">
       <div className="form-container">
         <h2>Register</h2>
         <form onSubmit={handleSubmit}>

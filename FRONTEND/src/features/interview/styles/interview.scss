@@ -475,3 +475,165 @@ $severity-low: #3fb950;
     border-color: rgba($severity-low, 0.25);
   }
 }
+@media (max-width: 1024px) {
+  .interview-page {
+    padding: 1rem;
+  }
+
+  .interview-layout {
+    flex-direction: column;
+  }
+
+  .interview-divider {
+    display: none;
+  }
+
+  .interview-nav,
+  .interview-sidebar {
+    width: 100%;
+  }
+
+  .interview-nav {
+    padding: 1.25rem;
+  }
+
+  .nav-content {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  .interview-nav__label {
+    display: none;
+  }
+
+  .interview-nav__item {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .interview-content {
+    max-height: unset;
+    padding: 1.5rem;
+  }
+
+  .interview-sidebar {
+    border-top: 1px solid $border-color;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .match-score {
+    flex: 1;
+    min-width: 220px;
+  }
+
+  .skill-gaps {
+    flex: 2;
+    min-width: 260px;
+  }
+}
+@media (max-width: 768px) {
+  .interview-page {
+    padding: 0.75rem;
+  }
+
+  .interview-layout {
+    border-radius: 0.75rem;
+  }
+
+  .interview-content {
+    padding: 1.2rem;
+  }
+
+  .content-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .q-card__header {
+    flex-wrap: wrap;
+  }
+
+  .q-card__question {
+    width: 100%;
+  }
+
+  .roadmap-day {
+    padding-left: 2.5rem;
+  }
+
+  .roadmap-list::before {
+    left: 18px;
+  }
+
+  .roadmap-day::before {
+    left: 11px;
+  }
+
+  .interview-sidebar {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.2rem;
+  }
+
+  .match-score {
+    align-items: center;
+  }
+
+  .match-score__ring {
+    width: 80px;
+    height: 80px;
+  }
+
+  .skill-gaps__list {
+    justify-content: center;
+  }
+
+  .button.primary-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+@media (max-width: 480px) {
+  .interview-page {
+    padding: 0.5rem;
+  }
+
+  .interview-content {
+    padding: 1rem;
+  }
+
+  .content-header h2 {
+    font-size: 1rem;
+  }
+
+  .q-card__header {
+    padding: 0.8rem;
+  }
+
+  .q-card__body {
+    padding: 0.8rem;
+  }
+
+  .q-card__question {
+    font-size: 0.82rem;
+  }
+
+  .match-score__value {
+    font-size: 1.3rem;
+  }
+
+  .skill-tag {
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -9,6 +9,7 @@ const Home = () => {
   const [jobDescription, setJobDescription] = useState("");
   const [selfDescription, setSelfDescription] = useState("");
   const [status, setStatus] = useState("📄 Reading your resume...");
+  const [resumeName, setResumeName] = useState("");
   const resumeInputRef = useRef();
 
   const navigate = useNavigate();
@@ -93,14 +94,15 @@ const Home = () => {
               <span className="badge badge--required">Required</span>
             </div>
             <textarea
-              onChange={(e) => {
-                setJobDescription(e.target.value);
-              }}
+              value={jobDescription}
+              onChange={(e) => setJobDescription(e.target.value)}
               className="panel__textarea"
               placeholder={`Paste the full job description here...\ne.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScript, and large-scale system design...'`}
               maxLength={5000}
             />
-            <div className="char-counter">0 / 5000 chars</div>
+            <div className="char-counter">
+              {jobDescription.length} / 5000 chars
+            </div>
           </div>
 
           {/* Vertical Divider */}
@@ -163,7 +165,18 @@ const Home = () => {
                   id="resume"
                   name="resume"
                   accept=".pdf,.docx"
+                  onChange={(e) => {
+                    if (e.target.files[0]) {
+                      setResumeName(e.target.files[0].name);
+                    }
+                  }}
                 />
+                {resumeName && (
+                  <div className="uploaded-file">
+                    <span>📄 {resumeName}</span>
+                    <small>✓ Resume uploaded successfully</small>
+                  </div>
+                )}
               </label>
             </div>
 
