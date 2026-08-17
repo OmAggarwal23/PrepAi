@@ -6,28 +6,49 @@ const {
 const interviewReportModel = require("../models/interviewReport.models.js");
 
 async function generateInterviewReportController(req, res) {
-  const resumeContent = await new pdfParse.PDFParse(
-    Uint8Array.from(req.file.buffer),
-  ).getText();
-  const { selfDescription, jobDescription } = req.body;
+  try {
+    console.log("===== GENERATE REPORT =====");
+    console.log("User:", req.user);
+    console.log("Body:", req.body);
+    console.log("File:", req.file);
 
-  const interviewReportbyAi = await generateInterviewReport({
-    resume: resumeContent.text,
-    selfDescription,
-    jobDescription,
-  });
+    let resumeText = "";
 
-  const interviewReport = await interviewReportModel.create({
-    user: req.user.id,
-    resume: resumeContent.text,
-    selfDescription,
-    jobDescription,
-    ...interviewReportbyAi,
-  });
-  res.status(201).json({
-    message: "Interview Report generated successfully",
-    interviewReport,
-  });
+    if (req.file) {
+      const resumeContent = await new pdfParse.PDFParse(
+        Uint8Array.from(req.file.buffer),
+      ).getText();
+
+      resumeText = resumeContent.text;
+    }
+
+    const { selfDescription, jobDescription } = req.body;
+
+    const interviewReportbyAi = await generateInterviewReport({
+      resume: resumeText,
+      selfDescription,
+      jobDescription,
+    });
+
+    const interviewReport = await interviewReportModel.create({
+      user: req.user.id,
+      resume: resumeText,
+      selfDescription,
+      jobDescription,
+      ...interviewReportbyAi,
+    });
+
+    return res.status(201).json({
+      message: "Interview Report generated successfully",
+      interviewReport,
+    });
+  } catch (err) {
+    console.error("Generate Report Error:", err);
+
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
 }
 
 async function getInteviewReportbyIdController(req, res) {

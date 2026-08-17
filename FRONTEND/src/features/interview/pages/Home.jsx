@@ -37,18 +37,45 @@ const Home = () => {
         currentStep++;
       }
     }, 2500);
-    const data = await generateReport({
-      jobDescription,
-      selfDescription,
-      resumeFile,
-    });
-    clearInterval(interval);
-    setStatus("✅ Interview Strategy Ready");
-    console.log("Returned Report:");
-    console.log(data);
+    // const data = await generateReport({
+    //   jobDescription,
+    //   selfDescription,
+    //   resumeFile,
+    // });
+    // clearInterval(interval);
+    // setStatus("✅ Interview Strategy Ready");
+    // console.log("Returned Report:");
+    // console.log(data);
 
-    console.log("Navigating to", `/interview/${data?._id}`);
-    navigate(`/interview/${data._id}`);
+    // console.log("Navigating to", `/interview/${data?._id}`);
+    // navigate(`/interview/${data._id}`);
+    try {
+      console.log("Calling generateReport...");
+
+      const data = await generateReport({
+        jobDescription,
+        selfDescription,
+        resumeFile,
+      });
+
+      console.log("generateReport finished");
+      console.log(data);
+
+      if (!data) {
+        console.log("No data returned");
+        alert("generateReport returned undefined");
+        return;
+      }
+
+      console.log("Navigating to:", `/interview/${data._id}`);
+
+      navigate(`/interview/${data._id}`);
+    } catch (err) {
+      console.error("HANDLE ERROR", err);
+    } finally {
+      clearInterval(interval);
+      setStatus("✅ Interview Strategy Ready");
+    }
   };
 
   if (loading) {
