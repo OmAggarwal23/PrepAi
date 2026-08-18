@@ -3,12 +3,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const tokenBlacklistModel = require("../models/blacklist.models");
 
-/**
- * @name registerUser
- * @description regster a new user, expects username, email and password in the request body
- * @access Public
- */
-
 async function registerUser(req, res) {
   const { username, email, password } = req.body;
 
@@ -31,21 +25,16 @@ async function registerUser(req, res) {
     email,
     password: hash,
   });
+
   const token = jwt.sign(
     { id: user._id, username: user.username },
     process.env.JWT_SECRET,
     { expiresIn: "1d" },
   );
 
-  res.cookie("token", token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    maxAge: 24 * 60 * 60 * 1000,
-  });
-
   res.status(201).json({
     message: "User registered successfully",
+    token,
     user: {
       id: user._id,
       username: user.username,
@@ -54,20 +43,14 @@ async function registerUser(req, res) {
   });
 }
 
-/**
- * @name loginUser
- * @description login a user, expects email and password in the request body
- * @access Public
- */
-
 async function loginUser(req, res) {
   const { email, password } = req.body;
 
   if (!email || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
+
   const user = await userModel.findOne({ email });
-  console.log(user);
 
   if (!user) {
     return res.status(400).json({ message: "Invalid credentials" });
@@ -80,23 +63,14 @@ async function loginUser(req, res) {
   }
 
   const token = jwt.sign(
-    {
-      id: user._id,
-      username: user.username,
-    },
+    { id: user._id, username: user.username },
     process.env.JWT_SECRET,
     { expiresIn: "1d" },
   );
 
-  res.cookie("token", token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    maxAge: 24 * 60 * 60 * 1000,
-  });
-
   res.status(200).json({
     message: "User logged in Successfully",
+    token,
     user: {
       id: user._id,
       username: user.username,
@@ -105,35 +79,19 @@ async function loginUser(req, res) {
   });
 }
 
-/**
- * @name logoutUser
- * @description logout a user, clears the token cookie
- * @access Public
- */
-
 async function logoutUser(req, res) {
-  const token = req.cookies.token;
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(" ")[1];
 
   if (token) {
     await tokenBlacklistModel.create({ token });
   }
-
-  res.clearCookie("token", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-  });
 
   res.status(200).json({
     message: "User logged out successfully",
   });
 }
 
-/**
- * @name getMe
- * @description Get the currently logged-in user's information
- * @access Private
- */
 async function getme(req, res) {
   const user = await userModel.findById(req.user.id);
   res.status(200).json({

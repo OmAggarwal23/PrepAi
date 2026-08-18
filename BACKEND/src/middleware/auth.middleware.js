@@ -2,17 +2,18 @@ const jwt = require("jsonwebtoken");
 const tokenBlacklistModel = require("../models/blacklist.models");
 
 async function authUser(req, res, next) {
-  const token = req.cookies.token;
+  const authHeader = req.headers.authorization;
 
-  if (!token) {
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({ message: "token not provided" });
   }
+
+  const token = authHeader.split(" ")[1];
 
   const istokenblacklisted = await tokenBlacklistModel.findOne({ token });
 
   if (istokenblacklisted) {
-    res.status(401).json({ message: "Token is Invalid" });
-    return;
+    return res.status(401).json({ message: "Token is Invalid" });
   }
 
   try {

@@ -72,6 +72,11 @@ const Home = () => {
       navigate(`/interview/${data._id}`);
     } catch (err) {
       console.error("HANDLE ERROR", err);
+      alert(
+        err.response?.data?.message ||
+          err.message ||
+          "Something went wrong generating the report",
+      );
     } finally {
       clearInterval(interval);
       setStatus("✅ Interview Strategy Ready");

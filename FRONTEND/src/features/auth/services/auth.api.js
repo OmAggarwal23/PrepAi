@@ -1,4 +1,3 @@
-import axios from "axios";
 import api from "../../../config/axios";
 
 export async function register({ username, email, password }) {
@@ -8,10 +7,10 @@ export async function register({ username, email, password }) {
       email,
       password,
     });
-
     return response.data;
   } catch (err) {
     console.log(err);
+    throw err;
   }
 }
 
@@ -21,27 +20,26 @@ export async function login({ email, password }) {
       email,
       password,
     });
-
     return response.data;
   } catch (err) {
     console.log(err);
+    throw err;
   }
 }
 
 export async function logout() {
   try {
     const response = await api.get("/api/auth/logout");
-
     return response.data;
   } catch (err) {
     console.log(err);
+    throw err;
   }
 }
 
 export async function getMe() {
   try {
     const response = await api.get("/api/auth/get-me");
-
     return response.data;
   } catch (err) {
     console.log(err);
